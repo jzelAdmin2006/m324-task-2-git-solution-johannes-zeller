@@ -21,3 +21,12 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run convert
+    - name: Possibly commit HTML changes
+      run: |
+        if [[ `git status --porcelain` ]]; then
+          git config --global user.name 'JZEL Bot'
+          git config --global user.email 'jo.zeller@protonmail.com'
+          git add -A
+          git commit -m "Automatically update HTML according to ReadMe"
+          git push
+        fi
